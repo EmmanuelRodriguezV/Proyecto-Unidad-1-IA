@@ -25,3 +25,11 @@ function onClickAdd_Agent()
     }
     }
 }
+function onClickBuscar()
+{
+
+}
+function onClickReiniciar()
+{
+    
+}

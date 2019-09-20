@@ -3,10 +3,15 @@ var color_picker_agent1;
 var color_picker_agent2;
 var graph = [];
 var row_nodes = [];
+var start_node,end_node;
 var selecter_value;
 var agents = [];
 function setup() {
 preps();
+{
+
+
+}
 draw_lines();
 }
 function draw() {
@@ -16,7 +21,55 @@ if(selecter_value != slider_nodes.value())
 	create_graph();
 	create_edges();
 	selecter_value = slider_nodes.value();
+
+	start_node = {nodo : graph[0][0]};
+	start_node['draw'] = () =>{
+		const nodo = start_node['nodo'];
+			fill("#000000");
+			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
+			fill(253);
+		print("se dibujo bien");
+	} 
+	start_node.draw();
+	end_node = {nodo:graph[graph.length-2][graph[0][5]]};
+	end_node['draw'] = () =>
+	{
+		const nodo = start_node['nodo'];
+			fill("#000000");
+			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
+			fill(253);
+		print("se dibujo bien");
+	}
+	end_node.draw();
+
+	//console.table(start_node);
 }		
+if(mouseIsPressed)
+	{
+		print(mouseButton)
+		if(mouseButton === 'left')
+		graph.map((renglon)=>{
+			renglon.map((nodo) =>{
+				if(nodo.is_inside(mouseX,mouseY)){
+					nodo.color = document.getElementById("wall_color").value;
+					nodo.draw();
+				}
+			})
+		})
+		else
+		if(mouseButton === 'right')
+		{
+			graph.map((renglon)=>{
+				renglon.map((nodo) =>{
+					if(nodo.is_inside(mouseX,mouseY)){
+						nodo.color = 253;
+						nodo.draw();
+					}
+						
+				})
+			})
+		}
+	}
 }
 function draw_lines()
 {
@@ -46,6 +99,7 @@ function create_graph(){
 		graph.push(row_nodes);
 		row_nodes = [];
 	}
+	
 }
 function create_edges()
 {
@@ -94,6 +148,7 @@ function create_edges()
 	 })
 	})
 }
+/*
 function mousePressed() {
 	graph.map((renglon) =>
 	{renglon.map((nodo) => 
@@ -130,3 +185,4 @@ function mousePressed() {
 
 }
 
+*/

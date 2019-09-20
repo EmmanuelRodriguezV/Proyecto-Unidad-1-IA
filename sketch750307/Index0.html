@@ -1,28 +1,3 @@
- <!-- <html>
-  <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="p5.js"></script>
-    <script src="preps.js"></script>
-      <script src="p5.dom.js"></script>
-      <script src="agent.js"></script>
-      <script src="Node.js"></script>
-      <script src="mousePressed.js"></script>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <nav class="navbar navbar-dark bg-dark">
-      --> 
-    <!-- Navbar content 
-    <div id="navbar-titulo">Proyecto Unidad I Segregación de Schelling
- </div>
-  </nav>
-<div class="mt-2 col-md-12">
-</div>
-  <script src="mySketch.js"></script>
-    </body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="es" >
 <head>
@@ -32,9 +7,9 @@
   <link href="https://fonts.googleapis.com/css?family=Manjari&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./Style.css">
 
-  <script src="./js/p5.js"></script>
+  <script src="./js/p5/p5.js"></script>
   <script src="./js/preps.js"></script>
-  <script src="./js/p5.dom.js"></script>
+  <script src="./js/p5/p5.dom.js"></script>
   <script src="./js/agent.js"></script>
   <script src="./js/Node.js"></script>
   <script src="./js/mousePressed.js"></script>
@@ -43,12 +18,17 @@
 <body>
   <nav class="navbar navbar-dark bg-dark">
       <h1  class=" mb-0 navbar-brand">Unidad 1 | Busqueda A*</h1>
-      <button class="btn btn-info" onclick="onClickBuscar()" id="btnBuscar">Buscar</button>
-      <button class="btn btn-info" id="btnReiniciar" onclick="onClickReiniciar()" onclick= >Reiniciar</button>
+      <button class="btn btn-info" id="btnBuscar">Buscar</button>
+      <button class="btn btn-info" id="btnReiniciar">Reiniciar</button>
   </nav>
   <div class="container-fluid">
     <div class="row">
       <div class="col align-self-center"> <!-- range inputs  -->
+        <form>
+          <div class="form-group">
+            <input type="range" class="form-control-range slider" id="formControlRange">
+          </div>
+        </form>
       </div>
       <div class="col"> <!-- button -->
         <button class="btn btn-info" type="button" id="buttonAgents">Generar Agentes</button>
@@ -58,7 +38,7 @@
         <input type="color" class="color" value="#00BEDA" id="color_picker_agent2"> Nodos visitados</input>
       </div>
       <div class="col align-self-center">
-        <input type="color" class="color" value="#808080" id="wall_color"> Nodo muro</input>
+        <input type="color" class="color" id="wall_color"> Nodo muro</input>
       </div>
       <div class="col align-self-center">
         <input type="color" class="color" value="#fffe6a" id="short_color"> Camino corto</input>
