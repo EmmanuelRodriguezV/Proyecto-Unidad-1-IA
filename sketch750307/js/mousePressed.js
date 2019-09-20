@@ -31,5 +31,26 @@ function onClickBuscar()
 }
 function onClickReiniciar()
 {
-    
+    draw_lines();
+    create_graph();
+    create_edges();
+    start_node = {nodo : graph[0][0]};
+	start_node['draw'] = () =>{
+		const nodo = start_node['nodo'];
+			fill("#000000");
+			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
+			fill(253);
+		print("se dibujo bien");
+	} 
+	start_node.draw();
+	end_node = {nodo:graph[graph.length-2][graph[0][5]]};
+	end_node['draw'] = () =>
+	{
+		const node = end_node['nodo'];
+			fill("#000000");
+			circle((node.x2-node.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
+			fill(253);
+		print("se dibujo bien");
+	}
+	end_node.draw();
 }

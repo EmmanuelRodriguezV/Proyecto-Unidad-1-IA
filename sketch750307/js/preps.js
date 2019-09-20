@@ -1,4 +1,6 @@
 var selected;
+//quitando el menu contextual del navegador con el click derecho
+//document.addEventListener("contextmenu",(e)=>{e.preventDefault()});
 function preps(){
   /*Creacion del canvas del tamaño de la ventana*/
 createCanvas(windowWidth, windowHeight);
