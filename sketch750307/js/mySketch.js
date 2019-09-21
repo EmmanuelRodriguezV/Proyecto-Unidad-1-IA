@@ -6,6 +6,7 @@ var row_nodes = [];
 var start_node,end_node;
 var selecter_value;
 var agents = [];
+var start_node_was_pressed,end_node_was_pressed;
 function setup() {
 preps();
 {
@@ -30,6 +31,11 @@ if(selecter_value != slider_nodes.value())
 			fill(253);
 	//	print("se dibujo bien");
 	} 
+	start_node['clear'] = () =>
+	{
+		fill(253);
+		rect(start_node.nodo.x1,start_node.nodo.y1,x_lines,y_lines);
+	}
 	start_node.draw();
 	print(graph.length/2);
 	end_node = {nodo : graph[Math.floor(graph.length/2)][Math.floor(graph[0].length/2)],color:"#a1b5d8"};
@@ -39,6 +45,13 @@ if(selecter_value != slider_nodes.value())
 		fill(end_node.color);
 			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
 			fill(253);
+	}
+
+	end_node['clear'] = () =>
+	{
+		end_node.nodo.color = 253;
+		fill(253);
+		rect(end_node.nodo.x1,end_node.nodo.y1,x_lines,y_lines);
 	}
 	end_node.draw();
 
@@ -50,9 +63,34 @@ if(mouseIsPressed)
 		if(mouseButton === 'left')
 		graph.map((renglon)=>{
 			renglon.map((nodo) =>{
+				if(nodo.is_inside(mouseX,mouseY) && nodo === start_node.nodo)
+				{
+                 start_node_was_pressed = true;
+				}
+				if(nodo.is_inside(mouseX,mouseY) && nodo === end_node.nodo)
+				{
+					end_node_was_pressed = true;
+				}
 				if(nodo.is_inside(mouseX,mouseY)){
+					if(start_node_was_pressed)
+					{
+						start_node.clear();
+				
+						start_node.nodo = nodo;
+						start_node.draw();
+						
+					}
+					else
+					if(end_node_was_pressed)
+					{
+						end_node.clear();
+						end_node.nodo = nodo;
+						end_node.draw();
+					}
+					else{
 					nodo.color = document.getElementById("wall_color").value;
 					nodo.draw();
+					}
 				}
 			})
 		})
@@ -71,11 +109,22 @@ if(mouseIsPressed)
 		}
 	}
 }
+
+function mouseReleased() 
+{
+	if (start_node_was_pressed)
+	start_node_was_pressed = false;
+	if(end_node_was_pressed)
+	end_node_was_pressed =false;
+}
 function draw_lines()
 {
 	background(253);
+//	x_lines = 30;
+//	y_lines = 30;
 	 x_lines = windowWidth/slider_nodes.value();
-	 y_lines = windowHeight/slider_nodes.value();
+//	 y_lines = windowHeight/slider_nodes.value();
+y_lines = x_lines;
 	//dibujando el mallado horizontal
 	for (var i = 100 ; i  < windowHeight; i+=y_lines )
 		line(0,i,windowWidth,i);

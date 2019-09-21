@@ -37,8 +37,11 @@ button_agent.position(300,60);
 createCanvas(windowWidth, windowHeight);
 strokeWeight(.4);
 	background(253);
-	 x_lines = windowWidth/slider_nodes.value();
-	 y_lines = windowHeight/slider_nodes.value();
+	const same_lines = windowWidth/slider_nodes.value();
+//	 x_lines = windowWidth/slider_nodes.value();
+//	 y_lines = windowHeight/slider_nodes.value();
+x_lines = 30;
+y_lines = 30;
 	//dibujando el mallado horizontal
 	for (var i = 100 ; i  < windowHeight; i+=y_lines )
 		line(0,i,windowWidth,i);
