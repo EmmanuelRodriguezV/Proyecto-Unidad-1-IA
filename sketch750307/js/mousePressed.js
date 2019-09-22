@@ -44,12 +44,13 @@ function distancia(nodoA,nodoB)
 }
 function is_inside_of_array(array,object)
 {
+    var flag = false;
     array.map((x)=>  
     {
-        if(x === object)
-        return true;
+        if(x.x1 === object.x1 && x.x2 === object.x2 && x.y1 === object.y1 && x.y2 === object.y2 )
+        flag = true
     })
-    return false;
+    return flag;
 }
 function a_star(nodo_inicial,nodo_final)
 {
@@ -118,8 +119,8 @@ function a_star(nodo_inicial,nodo_final)
 function onClickBuscar()
 {
 //a_star(start_node.nodo,end_node.nodo);
-//implementation();
-remove_backwards();
+implementation();
+//remove_backwards();
 }
 
 function onClickReiniciar()
@@ -191,22 +192,42 @@ var open_list = [];
 open_list.push(start_node.nodo);
 var close_list = [];
 var nodo_actual = "";
+
 while(open_list.length > 0)
 {
-if(is_inside_of_array(close_list,end_node.nodo)){
-while(nodo_actual.parent != undefined)
-path.push(nodo_actual.parent)
-_find_path = true;
-break;
-}
-}
-open_list.sort((nodo_a,nodo_b) => {return nodo_a.weight - nodo_b.weight});
+    open_list.sort((nodo_a,nodo_b) => {return nodo_a.weight - nodo_b.weight});
 nodo_actual = open_list[0];
 open_list.splice(0,1);
 close_list.push(nodo_actual);
 
+if(is_inside_of_array(close_list,end_node.nodo)){
+while(nodo_actual.parent != undefined){
+path.push(nodo_actual.parent)
+nodo_actual = nodo_actual.parent;
+}
+path = path.reverse();
+_find_path = true;
+break;
+}
+
+
+if(nodo_actual !== start_node.nodo && nodo_actual != end_node.nodo){
+nodo_actual.color = document.getElementById("color_picker_agent1").value;
+nodo_actual.draw();
+nodo_actual.color = 253;
+}
+
+
+
 nodo_actual.edges.map((x) =>
 {
+ if(x.color === 253)
+{
+    if(x !== start_node.nodo && x != end_node.nodo){
+        x.color = document.getElementById("color_picker_agent2").value;
+        x.draw();
+        x.color = 253;
+        }
 if(x !== nodo_actual)
 if(!is_inside_of_array(close_list,x))
 if(is_inside_of_array(open_list,x))
@@ -219,10 +240,32 @@ else
     x.parent = nodo_actual;
     open_list.push(x);    
 }
+}
+  
 
 });
 
 }
+if(_find_path)
+{
+    path.shift();
+    path.map((camino) =>
+    {
+       if(camino != start_node.nodo && camino != end_node.nodo)
+       {
+        camino.color = document.getElementById("short_color").value;
+        camino.draw();
+        camino.color = 253;
+       }
+    });
+    
+}
+else
+    {
+        alert("ruta no encontrada");
+        console.log("Ruta no encontrada");
+    }
 
+}
 
 
