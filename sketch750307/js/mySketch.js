@@ -74,8 +74,9 @@ if(mouseIsPressed)
 				if(nodo.is_inside(mouseX,mouseY)){
 					if(start_node_was_pressed)
 					{
+
 						start_node.clear();
-				
+						nodo.color = 253;
 						start_node.nodo = nodo;
 						start_node.draw();
 						
@@ -83,6 +84,7 @@ if(mouseIsPressed)
 					else
 					if(end_node_was_pressed)
 					{
+						nodo.color = 253;
 						end_node.clear();
 						end_node.nodo = nodo;
 						end_node.draw();
@@ -155,6 +157,7 @@ function create_edges()
 	graph.map((renglon)=>
 	{
      renglon.map((nodo)=>{
+		 
 		 const indice_nodo = renglon.indexOf(nodo);
 		 const indice_renglon = graph.indexOf(renglon);
          /*
@@ -168,6 +171,7 @@ function create_edges()
 		} 
 		catch (error) {
 		}
+
 		try {
 			nodo.edges.push(renglon[indice_nodo+1]);
 		} catch (error) {
@@ -176,13 +180,13 @@ function create_edges()
 		{
 			nodo.edges.push(graph[indice_renglon-1][indice_nodo]);
 		}
-		catch{
+		catch(error ){
 		}
 		try
 		{
 			nodo.edges.push(graph[indice_renglon+1][indice_nodo]);
 		}
-		catch
+		catch(error)
 		{
 
 		}
