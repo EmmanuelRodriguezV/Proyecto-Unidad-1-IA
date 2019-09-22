@@ -7,6 +7,7 @@ var start_node,end_node;
 var selecter_value;
 var agents = [];
 var start_node_was_pressed,end_node_was_pressed;
+
 function setup() {
 preps();
 {
@@ -23,14 +24,14 @@ if(selecter_value != slider_nodes.value())
 	create_edges();
 	selecter_value = slider_nodes.value();
 
-	start_node = {nodo : graph[0][0],color : "#c2d8b9"};
+	start_node = {nodo : graph[0][0],color : "#b3d236"};
 	start_node['draw'] = () =>{
 		const nodo = start_node['nodo'];
 			fill(start_node.color);
 			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
 			fill(253);
 	//	print("se dibujo bien");
-	} 
+	}
 	start_node['clear'] = () =>
 	{
 		fill(253);
@@ -38,7 +39,7 @@ if(selecter_value != slider_nodes.value())
 	}
 	start_node.draw();
 	print(graph.length/2);
-	end_node = {nodo : graph[Math.floor(graph.length/2)][Math.floor(graph[0].length/2)],color:"#a1b5d8"};
+	end_node = {nodo : graph[Math.floor(graph.length/2)][Math.floor(graph[0].length/2)],color:"#038cfc"};
 	end_node ['draw'] = () =>{
 
 		const nodo = end_node.nodo;
@@ -56,7 +57,7 @@ if(selecter_value != slider_nodes.value())
 	end_node.draw();
 
 	//console.table(start_node);
-}		
+}
 if(mouseIsPressed)
 	{
 	//	print(mouseButton)
@@ -79,7 +80,7 @@ if(mouseIsPressed)
 						nodo.color = 253;
 						start_node.nodo = nodo;
 						start_node.draw();
-						
+
 					}
 					else
 					if(end_node_was_pressed)
@@ -105,14 +106,14 @@ if(mouseIsPressed)
 						nodo.color = 253;
 						nodo.draw();
 					}
-						
+
 				})
 			})
 		}
 	}
 }
 
-function mouseReleased() 
+function mouseReleased()
 {
 	if (start_node_was_pressed)
 	start_node_was_pressed = false;
@@ -129,15 +130,15 @@ function draw_lines()
 y_lines = x_lines;
 	//dibujando el mallado horizontal
 	for (var i = 100 ; i  < windowHeight; i+=y_lines )
-		line(0,i,windowWidth,i);
-	for(var i = 0 ; i < windowWidth; i+=x_lines)
+		line(10,i,windowWidth,i);
+	for(var i = 10 ; i < windowWidth; i+=x_lines)
 		line(i,100,i,windowHeight);
 }
 function create_graph(){
 	agents = [];
 	var x1,x2,y1,y2;
 	graph = [];
-	for(var i = 0 ; i < windowWidth ; i+= x_lines)
+	for(var i = 10 ; i < windowWidth ; i+= x_lines)
 	{
 		for(var j = 100 ; j < windowHeight ; j += y_lines )
 		{
@@ -150,14 +151,14 @@ function create_graph(){
 		graph.push(row_nodes);
 		row_nodes = [];
 	}
-	
+
 }
 function create_edges()
 {
 	graph.map((renglon)=>
 	{
      renglon.map((nodo)=>{
-		 
+
 		 const indice_nodo = renglon.indexOf(nodo);
 		 const indice_renglon = graph.indexOf(renglon);
          /*
@@ -168,7 +169,7 @@ function create_edges()
 		 */
 		try {
 			nodo.edges.push(renglon[indice_nodo-1]);
-		} 
+		}
 		catch (error) {
 		}
 
@@ -190,7 +191,7 @@ function create_edges()
 		{
 
 		}
-	 
+
 		nodo.edges = nodo.edges.filter((element) => {
 			if(element != 0 )
 			{
@@ -204,7 +205,7 @@ function create_edges()
 /*
 function mousePressed() {
 	graph.map((renglon) =>
-	{renglon.map((nodo) => 
+	{renglon.map((nodo) =>
 		{
 			//circle(nodo.x1,nodo.y1,15);
 			if(nodo.is_inside(mouseX,mouseY)) {
@@ -232,7 +233,7 @@ function mousePressed() {
 
 			}
 		}
-		) 
+		)
 	}
 	);
 
