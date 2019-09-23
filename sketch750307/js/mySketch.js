@@ -1,3 +1,12 @@
+/*Declaracion de variables a utilizar
+Variables importantes!
+graph es el arreglo que contiene todo el grafo y dentro de el contiene una serie de renglones de tamaño x
+y dentro de esos renglones se encuentran los nodos 
+
+start_node_was_pressed es para poder obtener si el nodo fue presionado  por el raton
+end_node es para saber si el nodo final fue presionado por el raton
+*/
+
 var slider_nodes;
 var color_picker_agent1;
 var color_picker_agent2;
@@ -80,6 +89,7 @@ if(mouseIsPressed)
 						nodo.color = 253;
 						start_node.nodo = nodo;
 						start_node.draw();
+						onClickBuscar();
 
 					}
 					else
@@ -89,6 +99,7 @@ if(mouseIsPressed)
 						end_node.clear();
 						end_node.nodo = nodo;
 						end_node.draw();
+						onClickBuscar();
 					}
 					else{
 					nodo.color = document.getElementById("wall_color").value;
@@ -105,6 +116,7 @@ if(mouseIsPressed)
 					if(nodo.is_inside(mouseX,mouseY)){
 						nodo.color = 253;
 						nodo.draw();
+			
 					}
 
 				})
@@ -116,9 +128,16 @@ if(mouseIsPressed)
 function mouseReleased()
 {
 	if (start_node_was_pressed)
+	{
 	start_node_was_pressed = false;
-	if(end_node_was_pressed)
+	//draw_lines();
+	onClickBuscar();
+	}
+	if(end_node_was_pressed){
 	end_node_was_pressed =false;
+	//draw_lines();
+	onClickBuscar();
+	}
 }
 function draw_lines()
 {

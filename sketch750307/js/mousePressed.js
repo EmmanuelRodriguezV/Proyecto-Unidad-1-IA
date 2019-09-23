@@ -115,10 +115,30 @@ function a_star(nodo_inicial,nodo_final)
         })
     }
 }
-
+function draw_map()
+{
+    end_node.nodo.parent = "";
+    start_node.nodo.parent ="";
+    graph.map((renglon) =>
+    {
+        renglon.map((nodo) =>
+        {
+            nodo.draw();
+            nodo.parent = "";
+        })
+        
+    })
+}
 function onClickBuscar()
 {
+    /*
+    Metodo que es llamado cada vez que se cambia la posicion de los nodos de entrada y salida  como tambien al
+    darle click al boton de buscar */ 
 //a_star(start_node.nodo,end_node.nodo);
+draw_lines();
+draw_map();
+start_node.draw();
+end_node.draw();
 implementation();
 //remove_backwards();
 }
@@ -128,17 +148,25 @@ function onClickReiniciar()
     draw_lines();
     create_graph();
     create_edges();
-	start_node = {nodo : graph[0][0],color : "#c2d8b9"};
+    /*se reinicia el mallado , se crean los grafos de  nuevo al igual que sus vertices pero se vuelve a redibujar
+    los nodos de entrada y salida*/ 
+    
+	start_node = {nodo : graph[0][0],color : "#b3d236"};
 	start_node['draw'] = () =>{
 		const nodo = start_node['nodo'];
 			fill(start_node.color);
 			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
 			fill(253);
 	//	print("se dibujo bien");
-	} 
+	}
+	start_node['clear'] = () =>
+	{
+		fill(253);
+		rect(start_node.nodo.x1,start_node.nodo.y1,x_lines,y_lines);
+	}
 	start_node.draw();
 	print(graph.length/2);
-	end_node = {nodo : graph[Math.floor(graph.length/2)][Math.floor(graph[0].length/2)],color:"#a1b5d8"};
+	end_node = {nodo : graph[Math.floor(graph.length/2)][Math.floor(graph[0].length/2)],color:"#038cfc"};
 	end_node ['draw'] = () =>{
 
 		const nodo = end_node.nodo;
@@ -146,7 +174,15 @@ function onClickReiniciar()
 			circle((nodo.x2-nodo.x1)/2+nodo.x1,(nodo.y2-nodo.y1)/2 +nodo.y1,(nodo.y2-nodo.y1) );
 			fill(253);
 	}
+
+	end_node['clear'] = () =>
+	{
+		end_node.nodo.color = 253;
+		fill(253);
+		rect(end_node.nodo.x1,end_node.nodo.y1,x_lines,y_lines);
+	}
 	end_node.draw();
+
 }
 function remove_backwards()
 {
@@ -168,6 +204,8 @@ function remove_backwards()
        })
    })
 }
+/*Funcion heuristica que mediante un preprocesado asigna a cada nodo su valor en la distancia con respecto
+al nodo final*/
 function heuristic_map(){
 graph.map((renglon) =>{
     renglon.map((nodo) =>
@@ -183,7 +221,21 @@ graph.map((renglon) =>{
 }
 
 function implementation()
-{
+{ 
+    /*implementacion del algoritmo a* esta es la parte mas importante de todo el proyecto
+    se utilizan dos arreglos el open list se trabaja como una cola de prioridades
+    esto con el fin de siempre obtener al que tenga la minima distancia con respecto al nodo final y
+    asi llegar mas rapido 
+    el close list lo que hace es tener un registro de todos los nodos que ya han sido investigados tanto sus hijos
+
+    --Importante--
+    el algoritmo para cuando el open list no tiene nodos dentro lo cual significa que no se encontro la ruta al nodo final
+     o el algoritmo para cuando en el close list  se encontro el nodo buscado o nodo final 
+     esto quiere decir que podemos reconstruir el camino segun el padre del nodo final y asi de atras hacia adelante
+     podemos encontrar un camino o un path para poder seguir 
+
+     
+    */
     var _find_path = false
     var path = [];
 heuristic_map();
